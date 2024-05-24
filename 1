@@ -1,0 +1,76 @@
+diary-app/
+├── public/
+│   ├── index.html
+├── src/
+│   ├── App.js
+│   ├── index.js
+├── .gitignore
+├── package.json
+npx create-react-app diary-app
+cd diary-app
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diary App</title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
+import React, { useState } from 'react';
+
+function App() {
+    const [diaries, setDiaries] = useState([]);
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+
+    const addDiary = () => {
+        const newDiary = { title, content, date: new Date().toLocaleString() };
+        setDiaries([...diaries, newDiary]);
+        setTitle('');
+        setContent('');
+    };
+
+    return (
+        <div>
+            <h1>Diary App</h1>
+            <div>
+                <input 
+                    type="text" 
+                    placeholder="Title" 
+                    value={title} 
+                    onChange={(e) => setTitle(e.target.value)} 
+                />
+                <textarea 
+                    placeholder="Content" 
+                    value={content} 
+                    onChange={(e) => setContent(e.target.value)} 
+                />
+                <button onClick={addDiary}>Add Diary</button>
+            </div>
+            <div>
+                {diaries.map((diary, index) => (
+                    <div key={index}>
+                        <h2>{diary.title}</h2>
+                        <p>{diary.content}</p>
+                        <small>{diary.date}</small>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+export default App;
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+
+ReactDOM.render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+    document.getElementById('root')
+);
